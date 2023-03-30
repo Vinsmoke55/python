@@ -13,6 +13,21 @@ def encrypt(plain_text,shift_amount):
 		new_position=position+shift_amount
 		new_letter=alphabet[new_position]
 		cipher_text+=new_letter
-	print(cipher_text)
+	print(f"The encoded message is {cipher_text}")
 
-encrypt(plain_text=text,shift_amount=shift) #calling the encrypt function
+#decrypting the message by moving the index to index-shift_amount
+def decrypt(cipher_text,shift_amount):
+	plain_text=""
+	for letter in plain_text:
+		position=alphabet.index(letter)
+		new_position=position-shift_amount
+		new_letter=alphabet[new_position]
+		plain_text+=new_letter
+	print(f"The decoded message is {plain_text}")
+
+
+
+if direction=='encode':
+	encrypt(plain_text=text,shift_amount=shift) #calling the encrypt function
+elif direction=='decode':
+	decrypt(cipher_text=text,shift_amount=shift)	#calling the decrypt function
