@@ -3,7 +3,7 @@ from turtle import Turtle,Screen
 tim=Turtle()
 
 angle=0
-sides=3
+sides=2
 condition=True
 while condition:
 	angle=360/sides
