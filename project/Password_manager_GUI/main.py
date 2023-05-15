@@ -43,11 +43,16 @@ def save():
 		return
 
 	else:
-		with open("data.json","r") as data_file:
-			data=json.load(data_file)	#reading from the json file and and storing it in data
+		try:
+			with open("data.json","r") as data_file:
+				data=json.load(data_file)	#reading from the json file and and storing it in data
+		except FileNotFoundError:
+			with open("data.json","w") as data_file:
+				json.dump(newdata,data_file)
+		else:
 			data.update(new_data)	#updating the newdata to the old data
-		with open("data.json","w") as data_file:
-			json.dump(data,data_file,indent=4)	#writing to the the json file
+			with open("data.json","w") as data_file:
+				json.dump(data,data_file,indent=4)	#writing to the the json file
 		website_entry.delete(0,END)
 		password_entry.delete(0,END)
 
