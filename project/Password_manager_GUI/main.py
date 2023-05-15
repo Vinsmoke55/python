@@ -26,6 +26,18 @@ def insert_random_password():
 	password_entry.delete(0,END)
 	password_entry.insert(0,f"{random_password}")
 
+def find_password():
+	try:
+		with open("data.json","r") as data_file:
+			data=json.load(data_file)
+			website=website_entry.get()
+			email=data[website]["email"]
+			password=data[website]["password"]
+	except KeyError:
+		messagebox.showwarning(message="Entry not found.")
+	else:
+		messagebox.showinfo(title=website,message=f"email={email}\npassword={password}")
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
@@ -53,8 +65,9 @@ def save():
 			data.update(new_data)	#updating the newdata to the old data
 			with open("data.json","w") as data_file:
 				json.dump(data,data_file,indent=4)	#writing to the the json file
-		website_entry.delete(0,END)
-		password_entry.delete(0,END)
+		finally:
+			website_entry.delete(0,END)
+			password_entry.delete(0,END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -92,5 +105,8 @@ generate_password.grid(column=2,row=3)
 
 add_button=Button(text="Add",width=36,command=save)
 add_button.grid(column=1,row=4,columnspan=2)
+
+search_button=Button(text="Search",command=find_password)
+search_button.grid(column=3,row=1)
 
 window.mainloop()
