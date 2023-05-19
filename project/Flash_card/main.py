@@ -3,8 +3,13 @@ import pandas
 import random
 BACKGROUND_COLOR = "#B1DDC6"
 
-data=pandas.read_csv("./data/french_words.csv")
-to_learn=data.to_dict(orient="records")
+try:
+	data=pandas.read_csv("./data/wordstolearn.csv")
+except FileNotFoundError:
+	orginal_data=pandas.read_csv("./data/french_words.csv")
+	to_learn=orginal_data.to_dict(orient="recordsb")
+else:
+	to_learn=data.to_dict(orient="records")
 current_card={}
 
 def next_card():
@@ -21,6 +26,13 @@ def flip_card():
 	canvas.itemconfig(card_image,image=card_back)
 	canvas.itemconfig(card_title,text=f"English",fill="white")
 	canvas.itemconfig(card_word,text=f'{current_card["English"]}',fill="white")
+
+def known():
+	to_learn.remove(current_card)
+	print(len(to_learn))
+	data=pandas.DataFrame(to_learn)
+	data.to_csv("./data/wordstolearn.csv")
+	next_card()
 
 
 # creating the user interface
@@ -40,7 +52,7 @@ canvas.grid(row=0,column=0,columnspan=2)
 
 right=PhotoImage(file="./images/right.png")
 wrong=PhotoImage(file="./images/wrong.png")
-right_button=Button(image=right,highlightthickness=0,command=next_card)
+right_button=Button(image=right,highlightthickness=0,command=known)
 right_button.grid(row=1,column=0)
 
 wrong_button=Button(image=wrong,highlightthickness=0,command=next_card)
