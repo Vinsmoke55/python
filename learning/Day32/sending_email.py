@@ -1,4 +1,4 @@
-
+# sending an email using smtplib
 import smtplib
 
 EMAIL="neupaneayush3@gmail.com"
